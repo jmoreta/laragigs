@@ -25,7 +25,7 @@ class ListingController extends Controller
 
     return view('listings.index',['heading'=> 'Latest Listings',
                             'listings'=> Listing::latest()
-                            -> filter(request(['tag','search']))->get()
+                            -> filter(request(['tag','search']))->paginate(6)
                         ]);
 
 
@@ -60,6 +60,10 @@ public function store(Request $request){
         'description'=>'required'
     ]);
 
-    return redirect('/');
+    Listing::create($formFields);
+
+
+
+    return redirect('/')->with('message','Listing created successfully!');
 }
 }
