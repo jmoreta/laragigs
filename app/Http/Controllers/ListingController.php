@@ -48,7 +48,6 @@ class ListingController extends Controller
 //store gigs data
 public function store(Request $request){
 
- 
 
     $formFields =  $request->validate([
         'title'=> 'required',
@@ -57,8 +56,21 @@ public function store(Request $request){
         'website'=>'required',
         'email'=>['required','email'],
         'tags'=> 'required',
-        'description'=>'required'
+        'description'=>'required',
+        
     ]);
+
+   
+// image path was not saved to the database cause the in the protected $fillable varibale on the Model, the logo field was not defined and 
+// as the field is nullable laravel did not show any error.
+     if($request->hasFile('logo')){
+     
+        $formFields['logo']= $request->file('logo')->store('logos','public');
+    
+     
+        }
+
+
 
     Listing::create($formFields);
 
