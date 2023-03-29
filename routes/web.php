@@ -29,10 +29,23 @@ Route::get('/listings/create',[ListingController::class,'create']);
 //Store listing Data
 Route::post('/listings',[ListingController::class,'store']);
 
+
+//Update Listings
+Route::put('/listings/{listing}',[ListingController::class,'update']);
+
+//Delete Listings
+Route::delete('/listings/{listing}',[ListingController::class,'destroy']);
+
+//show edit form
+Route::get('/listings/{listing}/edit',[ListingController::class,'edit']);
+
+
 //Single Listings
 Route::get('/listings/{listing}',[ListingController::class,'show']);
 
 
+
+Route::get('/register',[UserController::class,'create']);
 //function(Listing $listing){
 
     // with eloquent model binding
