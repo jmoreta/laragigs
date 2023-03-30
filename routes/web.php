@@ -4,6 +4,7 @@ use App\Http\Controllers\ListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Models\Listing;
 
 /*
@@ -16,6 +17,8 @@ use App\Models\Listing;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
 
 //show all listings
 Route::get('/', [ListingController::class,'index']);
@@ -43,9 +46,12 @@ Route::get('/listings/{listing}/edit',[ListingController::class,'edit']);
 //Single Listings
 Route::get('/listings/{listing}',[ListingController::class,'show']);
 
-
-
+//Show the Register Form
 Route::get('/register',[UserController::class,'create']);
+
+//Create new user
+Route::post('users',[UserController::class,'store']);
+
 //function(Listing $listing){
 
     // with eloquent model binding
@@ -87,14 +93,14 @@ Route::get('/register',[UserController::class,'create']);
 //     return $request->name.' '. $request->city;
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';

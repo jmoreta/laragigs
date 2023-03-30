@@ -1,5 +1,9 @@
-<x-layout>
-    
+
+
+ 
+    <x-layout>
+
+
 
     <x-card class="max-w-lg mx-auto mt-24">
 
@@ -10,7 +14,8 @@
             <p class="mb-4">Create an account to post gigs</p>
         </header>
 
-        <form action="">
+        <form method="POST" action="/users">
+            @csrf
             <div class="mb-6">
                 <label for="name" class="inline-block text-lg mb-2">
                     Name
@@ -19,7 +24,14 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="name"
+                    value="{{old('name')}}"
                 />
+
+                @Error('name')
+
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
             <div class="mb-6">
@@ -30,11 +42,13 @@
                     type="email"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="email"
+                    value="{{old('email')}}"
                 />
-                <!-- Error Example -->
-                <p class="text-red-500 text-xs mt-1">
-                    Please enter a valid email
-                </p>
+                
+                @Error('email')
+
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
             </div>
 
             <div class="mb-6">
@@ -48,12 +62,18 @@
                     type="password"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="password"
+                    value="{{old('password')}}"
                 />
+                
+                @Error('password')
+
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
             </div>
 
             <div class="mb-6">
                 <label
-                    for="password2"
+                    for="password_confirmation"
                     class="inline-block text-lg mb-2"
                 >
                     Confirm Password
@@ -61,8 +81,14 @@
                 <input
                     type="password"
                     class="border border-gray-200 rounded p-2 w-full"
-                    name="password2"
+                    name="password_confirmation"
+                    value="{{old('password_confirmation')}}"
                 />
+                
+                @Error('password_confirmation')
+
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
             </div>
 
             <div class="mb-6">
@@ -77,11 +103,11 @@
             <div class="mt-8">
                 <p>
                     Already have an account?
-                    <a href="login.html" class="text-laravel"
+                    <a href="/login" class="text-laravel"
                         >Login</a
                     >
                 </p>
             </div>
         </form>
-    </x-card>
+    </x-card> 
 </x-layout>
