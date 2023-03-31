@@ -132,7 +132,7 @@
                 @error('logo')
          
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-                @enderro
+                @enderror
             </div>
 
             <img

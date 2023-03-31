@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -71,7 +72,9 @@ public function store(Request $request){
      
         }
 
+        $formFields['user_id']= auth()->id();
 
+        // dd($formFields);
 
     Listing::create($formFields);
 
@@ -90,6 +93,11 @@ public function store(Request $request){
 //Update
     public function Update(Request $request, Listing $listing){
 
+        //make sure logged in user is the owner
+        if($listing->user_id != auth()->id()){
+
+            abort(403,'Unathorized Action ');
+        }
 
         $formFields =  $request->validate([
             'title'=> 'required',
@@ -121,10 +129,24 @@ public function store(Request $request){
 //Delete Listings 
 public function destroy(Listing $listing){
 
+       //make sure logged in user is the owner
+       if($listing->user_id != auth()->id()){
+
+        abort(403,'Unathorized Action ');
+    }
+    
     $listing->delete();
 
     return redirect('/')->with('message','Listing deleted successfully');
 
+}
+
+//Show listing Filter by users
+public function manage(){
+
+
+    return view('listings.manage',['listings'=>auth()->user()->listings()->get()]);
+    
 }
 
 }
